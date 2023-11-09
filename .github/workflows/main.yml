@@ -1,0 +1,47 @@
+
+name: SBOM upload
+
+on: 
+  workflow_dispatch:
+  push: 
+    branches: ["main"]
+
+jobs:
+  SBOM-upload:
+
+    runs-on: ubuntu-latest
+    permissions: 
+      id-token: write
+      contents: write
+      
+    steps:
+    - uses: actions/checkout@v3
+    - name: Generate SBOM
+      run: | 
+name: SBOM upload
+
+on: 
+  workflow_dispatch:
+  push: 
+    branches: ["main"]
+
+jobs:
+  SBOM-upload:
+
+    runs-on: ubuntu-latest
+    permissions: 
+      id-token: write
+      contents: write
+      
+    steps:
+    - uses: actions/checkout@v3
+    - name: Generate SBOM
+      run: |
+        mkdir spdx
+        cd spdx
+        tar xf ../*spdx.tar.zst
+
+    - name: SBOM upload 
+      uses: advanced-security/spdx-dependency-submission-action@v0.0.1
+      with:
+        filePath: "spdx"
